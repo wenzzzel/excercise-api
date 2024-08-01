@@ -1,3 +1,5 @@
+using excercise_api.Repositories;
+
 public class Program
 {
     private static void Main(string[] args)
@@ -7,6 +9,8 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
+
+        builder.Services.AddSingleton<IRecordRepository, RecordRepository>();
 
         var app = builder.Build();
 

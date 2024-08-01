@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using excercise_api.Models;
+using excercise_api.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace excercise_api.Controllers;
 
@@ -7,30 +10,16 @@ namespace excercise_api.Controllers;
 [ApiController]
 public class ExcercisesController : ControllerBase
 {
-    [HttpGet]
-    public IEnumerable<string> Get()
+    private readonly IRecordRepository _recordRepository;
+
+    public ExcercisesController(IRecordRepository excerciseRepository)
     {
-        return new string[] { "value1", "value2" };
+        _recordRepository = excerciseRepository;
     }
 
-    [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return "value";
-    }
+    [HttpGet]
+    public IEnumerable<RecordDto> Get() => _recordRepository.GetRecords();
 
     [HttpPost]
-    public void Post([FromBody] string value)
-    {
-    }
-
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
-    }
+    public void Post([FromBody] RecordDto input) => _recordRepository.AddRecord(input);
 }
